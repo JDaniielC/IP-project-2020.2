@@ -3,7 +3,7 @@
 #define G 350
 #define PLAYER_JUMP_SPD 200.0f
 #define PLAYER_HOR_SPD 200.0f
-
+//Passagem secreta voltando no início ele cai
 typedef struct Player {
     Vector2 position;
     float speed;
@@ -35,22 +35,22 @@ void UpdatePlayer(Player *player, EnvItem *envItems, int envItemsLength, float d
         EnvItem *ei = envItems + i;
         Player *p = player;
         if (ei->blocking && 
-            CheckCollisionRecs((Rectangle){p->position.x, p->position.y, p->width, p->height}, ei->rect) &&
+            ei->rect.x <= p->position.x &&
+            ei->rect.x + ei->rect.width >= p->position.x &&
+            ei->rect.y >= p->position.y &&
             ei->rect.y < p->position.y + player->speed*delta)
-        {
+        {   
             hitObstacle = 1;
             player->speed = 0.0f;
             p->position.y = ei->rect.y;
-        }
 
-        if (ei->vert && 
+        } else if (ei->vert && 
             CheckCollisionRecs((Rectangle){p->position.x, p->position.y, p->width, p->height}, ei->rect)) {
             hitObstacle = 1;
-            if (p->position.x <= ei->rect.x) {
-                
-            }
-        }
-        
+            if (p->position.x <= ei->rect.x) player->position.x -= PLAYER_HOR_SPD*delta;
+            else player->position.x += PLAYER_HOR_SPD*delta;
+
+        }  
     }
 
     if (!hitObstacle)
@@ -69,20 +69,26 @@ int main(void) {
     InitWindow(screenWidth, screenHeight, "Joguinho");
 
     Player player = { 0 };
-    player.position = (Vector2){ 400, 280 };
+    player.position = (Vector2){ 40, 570 };
     player.speed = 0;
     player.canJump = false;
     player.height = 25;
     player.width = 25;
     EnvItem envItems[] = {
-        {{ 0, 0, 800, 2 }, 1, 0, RED },
-        {{ 0, 0, 2, 600 }, 0, 1, RED },
-        {{100, 560, 100, 10}, 1, 0, GREEN},
-        {{400, 300, 100, 10}, 1, 0, GREEN},
-        {{400, 350, 100, 10}, 1, 0, GREEN},
-        {{400, 500, 20, 100}, 0, 1, GREEN},
-        {{ 798, 0, 2, 600 }, 0, 1, RED },
-        {{ 0, 598, 800, 2 }, 1, 0, RED }
+        {{ 0, 0, 800, 10 }, 1, 0, RED },
+        {{ 0, 0, 10, 600 }, 0, 1, RED },
+        {{ 798, 0, 10, 600 }, 0, 1, RED },
+        {{ 0, 598, 800, 10 }, 1, 0, RED },
+        {{50, 580, 100, 20}, 1, 0, BLACK},
+        {{180, 520, 100, 20}, 1, 0, BLACK},
+        {{310, 440, 100, 20}, 1, 0, BLACK},
+        {{450, 300, 20, 100}, 0, 1, BLACK}, 
+        {{180, 270, 40, 20}, 1, 0, BLACK}, 
+        {{150, 230, 20, 60}, 0, 1, BLACK}, 
+        {{500, 200, 70, 20}, 1, 0, BLACK},
+        {{700, 300, 100, 20}, 1, 0, BLACK},
+        {{500, 400, 100, 20}, 1, 0, BLACK}, 
+        {{300, 200, 100, 20}, 1, 0, BLACK}
     };
 
     int envItemsLength = sizeof(envItems)/sizeof(envItems[0]);
@@ -95,7 +101,7 @@ int main(void) {
     while(!WindowShouldClose()) {
         float deltaTime = GetFrameTime();
         UpdatePlayer(&player, envItems, envItemsLength, deltaTime);
-        
+        if (IsKeyPressed(KEY_R)) player.position = (Vector2){30, 570};
         BeginDrawing();
             //Fundo fica brilhando se não escolher a cor
             ClearBackground(RAYWHITE);
@@ -105,7 +111,7 @@ int main(void) {
             }
             Rectangle playerRect = { player.position.x, player.position.y - 25, player.width, player.height };
             DrawRectangleRec(playerRect, RED);
-            
+            DrawCircle(750, 550, 30, BLUE);
             DrawText("LK", 100, 10, 30, PINK);
         EndDrawing();
     }
