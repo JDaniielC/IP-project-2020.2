@@ -1,6 +1,7 @@
 #include "raylib.h"
 
 #define G 350
+#define deslizar 50
 #define PLAYER_JUMP_SPD 200.0f
 #define PLAYER_HOR_SPD 200.0f
 //Passagem secreta voltando no início ele cai
@@ -34,23 +35,53 @@ void UpdatePlayer(Player *player, EnvItem *envItems, int envItemsLength, float d
     {
         EnvItem *ei = envItems + i;
         Player *p = player;
-        if (ei->blocking && 
-            ei->rect.x <= p->position.x &&
-            ei->rect.x + ei->rect.width >= p->position.x &&
-            ei->rect.y >= p->position.y &&
-            ei->rect.y < p->position.y + player->speed*delta)
-        {   
+
+        if (CheckCollisionRecs((Rectangle){
+            p->position.x, p->position.y, p->width, p->height
+        }, ei->rect) && (ei->blocking || ei->vert)) {
             hitObstacle = 1;
             player->speed = 0.0f;
-            p->position.y = ei->rect.y;
+            
+            if (ei->rect.x < p->position.x + p->width
+                && p->position.x < ei->rect.x) {
+                p->position.x = ei->rect.x - p->width;
+            }
+            else if (p->position.x < ei->rect.x + ei->rect.width
+                && ei->rect.x + ei->rect.width < p->position.x + p->width) {
+                p->position.x = ei->rect.x + ei->rect.width;
+            }
+            else if (ei->rect.y < p->position.y + p->height
+                && p->position.y < ei->rect.y)
+            {
+                p->position.y = ei->rect.y - p->height;
+            }
+            else if (p->position.y < ei->rect.y + ei->rect.height
+                && ei->rect.y < p->position.y) {
+                p->position.y = ei->rect.y + ei->rect.height;
+            }
 
-        } else if (ei->vert && 
-            CheckCollisionRecs((Rectangle){p->position.x, p->position.y, p->width, p->height}, ei->rect)) {
-            hitObstacle = 1;
-            if (p->position.x <= ei->rect.x) player->position.x -= PLAYER_HOR_SPD*delta;
-            else player->position.x += PLAYER_HOR_SPD*delta;
+            // if (ei->blocking && 
+            //     ei->rect.x <= p->position.x &&
+            //     ei->rect.x + ei->rect.width >= p->position.x &&
+            //     ei->rect.y >= p->position.y &&
+            //     ei->rect.y < p->position.y + player->speed*delta)
+            // {   
+            //     hitObstacle = 1;
+            //     player->speed = 0.0f;
+            //     p->position.y = ei->rect.y;
 
-        }  
+            // else if (ei->vert) {
+            //     hitObstacle = 1;
+            //     if (p->position.x <= ei->rect.x) {
+            //       player->position.x -= PLAYER_HOR_SPD*delta;  
+            //     } 
+            //     else player->position.x += PLAYER_HOR_SPD*delta;
+            //     if (p->position.y < ei->rect.y + ei->rect.height - 20) player->position.y += deslizar*delta;
+            //     // player->speed += G*delta;
+                
+            // }  
+        }
+
     }
 
     if (!hitObstacle)
@@ -63,13 +94,13 @@ void UpdatePlayer(Player *player, EnvItem *envItems, int envItemsLength, float d
 }
 
 int main(void) {
-    const int screenWidth = 1000;
-    const int screenHeight = 800;
+    const int screenWidth = 800;
+    const int screenHeight = 600;
     
     InitWindow(screenWidth, screenHeight, "Joguinho");
 
     Player player = { 0 };
-    player.position = (Vector2){ 40, 570 };
+    player.position = (Vector2){ 50, 550 };
     player.speed = 0;
     player.canJump = false;
     player.height = 25;
@@ -109,7 +140,12 @@ int main(void) {
             for (int i = 0; i < envItemsLength; i++) {
                 DrawRectangleRec(envItems[i].rect, envItems[i].color);
             }
-            Rectangle playerRect = { player.position.x, player.position.y - 25, player.width, player.height };
+            Rectangle playerRect = { 
+                player.position.x, 
+                player.position.y, 
+                player.width, 
+                player.height 
+            };
             DrawRectangleRec(playerRect, RED);
             DrawCircle(750, 550, 30, BLUE);
             DrawText("LK", 100, 10, 30, PINK);
