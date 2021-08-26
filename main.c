@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "config.h"
 
 #define G 350
 #define deslizar 50
@@ -19,6 +20,48 @@ typedef struct EnvItem {
     int vert;
     Color color;
 } EnvItem;
+
+void mostrarTextura(Texture2D esquerdo, Texture2D direito, Texture2D agua, Texture2D chao, Texture2D meio, Texture2D mid, Texture2D objeto, Texture2D parede, Texture2D top) {
+    int i, k;
+    Rectangle retangulo[] = {
+        { 0, 0, 800, 10 },
+        { 0, 0, 10, 600 },
+        { 798, 0, 10, 600 },
+        { 0, 598, 800, 10 },
+        {60, 580, 100, 20},
+        {180, 520, 100, 20},
+        {300, 440, 100, 20},
+        {700, 300, 100, 20},
+        {500, 400, 100, 20},
+        {300, 200, 100, 20},
+        {500, 200, 80, 20},
+        {180, 280, 40, 20},
+        {460, 300, 20, 100},
+        {150, 230, 20, 60},
+    };
+    
+    DrawTextureRec(mid, retangulo[0], (Vector2){retangulo[0].x, retangulo[0].y}, WHITE);
+    DrawTextureRec(parede, retangulo[1], (Vector2){retangulo[1].x, retangulo[1].y}, WHITE);
+    DrawTextureRec(mid, retangulo[3], (Vector2){retangulo[3].x, retangulo[3].y}, WHITE);
+    DrawTextureRec(parede, retangulo[2], (Vector2){retangulo[2].x, retangulo[2].y}, WHITE);
+
+    for (k = 4; k < 12; k++) {
+        DrawTexture(esquerdo, retangulo[k].x, retangulo[k].y, WHITE);
+        for (i = retangulo[k].x+20; i <= retangulo[k].x + retangulo[k].width - 40; i+=20){
+            DrawTexture(mid, i, retangulo[k].y, WHITE);
+        }
+        DrawTexture(direito, retangulo[k].x + retangulo[k].width - 20, retangulo[k].y, WHITE);
+    }
+
+    for (k = 12; k < 14; k++) {
+        DrawTexture(top, retangulo[k].x, retangulo[k].y, WHITE);
+        for (i = retangulo[k].y+20; i < retangulo[k].y + retangulo[k].height; i+=20){
+            DrawTexture(meio, retangulo[k].x, i, WHITE);
+        }
+        DrawTexture(chao, retangulo[k].x, retangulo[k].y + retangulo[k].height, WHITE);
+    }
+
+}
 
 void UpdatePlayer(Player *player, EnvItem *envItems, int envItemsLength, float delta)
 {
@@ -41,7 +84,7 @@ void UpdatePlayer(Player *player, EnvItem *envItems, int envItemsLength, float d
         }, ei->rect) && (ei->blocking || ei->vert)) {
             hitObstacle = 1;
             player->speed = 0.0f;
-            
+
             if (ei->rect.x < p->position.x + p->width
                 && p->position.x < ei->rect.x) {
                 p->position.x = ei->rect.x - p->width;
@@ -94,17 +137,17 @@ void UpdatePlayer(Player *player, EnvItem *envItems, int envItemsLength, float d
 }
 
 int main(void) {
-    const int screenWidth = 800;
-    const int screenHeight = 600;
+    const int telaHorizontal = 900;
+    const int TelaVertical = 700;
     
-    InitWindow(screenWidth, screenHeight, "Joguinho");
+    InitWindow(telaHorizontal, TelaVertical, "Joguinho");
 
     Player player = { 0 };
     player.position = (Vector2){ 50, 550 };
     player.speed = 0;
     player.canJump = false;
-    player.height = 25;
-    player.width = 25;
+    player.height = 20;
+    player.width = 20;
     EnvItem envItems[] = {
         {{ 0, 0, 800, 10 }, 1, 0, RED },
         {{ 0, 0, 10, 600 }, 0, 1, RED },
@@ -121,15 +164,23 @@ int main(void) {
         {{500, 400, 100, 20}, 1, 0, BLACK}, 
         {{300, 200, 100, 20}, 1, 0, BLACK}
     };
-
     int envItemsLength = sizeof(envItems)/sizeof(envItems[0]);
 
-    //Vetor em 2° dimensão, X e Y
-    // Vector2 ballposition = {(float)screenWidth/2, (float)screenHeight/2};
+    Texture2D texture = LoadTexture("Assets/character.png");
+    Texture2D agua = LoadTexture("Assets/agua.png");
+    Texture2D chao = LoadTexture("Assets/chao.png");
+    Texture2D direito = LoadTexture("Assets/direito.png");
+    Texture2D esquerdo = LoadTexture("Assets/esquerdo.png");
+    Texture2D meio = LoadTexture("Assets/meio.png");
+    Texture2D mid = LoadTexture("Assets/mid.png");
+    Texture2D objeto = LoadTexture("Assets/objeto.png");
+    Texture2D parede = LoadTexture("Assets/parede.png");
+    Texture2D top = LoadTexture("Assets/top.png");
 
     SetTargetFPS(60);
 
     while(!WindowShouldClose()) {
+
         float deltaTime = GetFrameTime();
         UpdatePlayer(&player, envItems, envItemsLength, deltaTime);
         if (IsKeyPressed(KEY_R)) player.position = (Vector2){30, 570};
@@ -137,20 +188,34 @@ int main(void) {
             //Fundo fica brilhando se não escolher a cor
             ClearBackground(RAYWHITE);
 
-            for (int i = 0; i < envItemsLength; i++) {
-                DrawRectangleRec(envItems[i].rect, envItems[i].color);
-            }
-            Rectangle playerRect = { 
-                player.position.x, 
-                player.position.y, 
-                player.width, 
-                player.height 
-            };
-            DrawRectangleRec(playerRect, RED);
-            DrawCircle(750, 550, 30, BLUE);
-            DrawText("LK", 100, 10, 30, PINK);
+            // for (int i = 0; i < envItemsLength; i++) {
+            //     DrawRectangleRec(envItems[i].rect, envItems[i].color);
+            // }
+            // Rectangle playerRect = { 
+            //     player.position.x, 
+            //     player.position.y, 
+            //     player.width, 
+            //     player.height 
+            // };
+            
+            DrawTexture(objeto, 550, 550, WHITE);
+            DrawTexture(texture, player.position.x, player.position.y, WHITE);
+
+            mostrarTextura(esquerdo, direito, agua, chao, meio, mid, objeto, parede, top);
+            
         EndDrawing();
     }
+    UnloadTexture(texture);
+    UnloadTexture(agua);
+    UnloadTexture(chao);
+    UnloadTexture(direito);
+    UnloadTexture(esquerdo);
+    UnloadTexture(meio);
+    UnloadTexture(mid);
+    UnloadTexture(objeto);
+    UnloadTexture(parede);
+    UnloadTexture(top);
+
     CloseWindow();
 
     return 0;
