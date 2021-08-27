@@ -11,21 +11,32 @@ typedef struct Player {
 
 typedef struct Plataforma {
     Rectangle rect;
-    int some;
     int mata;
     int trampolim;
-    Color color;
 } Plataforma;
+
+typedef struct {
+    Rectangle act;
+    Rectangle react;
+    int bloqueado;
+    int star;
+} Feature;
 
 #define Gravidade 350
 #define deslizar 50
 #define constVertical 200.0f
 #define constHorizontal 200.0f
 
-void mostrarTextura(Texture2D esquerdo, Texture2D direito, Texture2D agua, Texture2D chao, Texture2D meio, Texture2D mid, Texture2D objeto, Texture2D parede, Texture2D top);
+void mostrarTextura(Texture2D *nivel, Plataforma *plat, Feature *recursos);
+
+void mostrarTextura1(Texture2D *nivel1, Plataforma *plat, Feature *recursos);
+
+void mostrarTextura2(Texture2D *nivel2, Plataforma *plat, Feature *recursos);
 
 void movJogador(Player *player, Plataforma *plataformas, int tamPlataforma, float delta, Vector2 inicial);
 
-void niveis(int *fase);
+void niveis(int fase, Plataforma *plat, Feature *recursos);
+
+void features(Player *player, Feature *recursos, int tam, float delta, int *fase);
 
 #endif

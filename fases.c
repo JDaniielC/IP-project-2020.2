@@ -1,50 +1,42 @@
 #include "raylib.h"
 #include "config.h"
 
-void mostrarTextura(Texture2D esquerdo, Texture2D direito, Texture2D agua, Texture2D chao, Texture2D meio, Texture2D mid, Texture2D objeto, Texture2D parede, Texture2D top) {
+void mostrarTextura(Texture2D *nivel, Plataforma *plat, Feature *recursos) {
     int i, k;
-    Rectangle retangulo[] = {
-        { 0, 0, 800, 10 },
-        { 0, 0, 10, 600 },
-        { 798, 0, 10, 600 },
-        { 0, 598, 800, 10 },
-        {60, 580, 100, 20},
-        {180, 520, 100, 20},
-        {300, 440, 100, 20},
-        {700, 300, 100, 20},
-        {500, 400, 100, 20},
-        {300, 200, 100, 20},
-        {500, 200, 80, 20},
-        {180, 280, 40, 20},
-        {460, 300, 20, 100},
-        {150, 230, 20, 60},
-    };
     
-    DrawTextureRec(mid, retangulo[0], (Vector2){retangulo[0].x, retangulo[0].y}, WHITE);
-    DrawTextureRec(parede, retangulo[1], (Vector2){retangulo[1].x, retangulo[1].y}, WHITE);
-    DrawTextureRec(mid, retangulo[3], (Vector2){retangulo[3].x, retangulo[3].y}, WHITE);
-    DrawTextureRec(parede, retangulo[2], (Vector2){retangulo[2].x, retangulo[2].y}, WHITE);
+    DrawTextureRec(nivel[5], plat[0].rect, (Vector2){plat[0].rect.x, plat[0].rect.y}, WHITE);
+    DrawTextureRec(nivel[7], plat[1].rect, (Vector2){plat[1].rect.x, plat[1].rect.y}, WHITE);
+    DrawTextureRec(nivel[5], plat[3].rect, (Vector2){plat[3].rect.x, plat[3].rect.y}, WHITE);
+    DrawTextureRec(nivel[7], plat[2].rect, (Vector2){plat[2].rect.x, plat[2].rect.y}, WHITE);
 
     for (k = 4; k < 12; k++) {
-        DrawTexture(esquerdo, retangulo[k].x, retangulo[k].y, WHITE);
-        for (i = retangulo[k].x+18; i <= retangulo[k].x + retangulo[k].width - 20; i+=18){
-            DrawTexture(mid, i, retangulo[k].y, WHITE);
+        DrawTexture(nivel[3], plat[k].rect.x, plat[k].rect.y, WHITE);
+        for (i = plat[k].rect.x+18; i <= plat[k].rect.x + plat[k].rect.width - 20; i+=18){
+            DrawTexture(nivel[5], i, plat[k].rect.y, WHITE);
         }
-        DrawTexture(direito, retangulo[k].x + retangulo[k].width - 10, retangulo[k].y, WHITE);
+        DrawTexture(nivel[2], plat[k].rect.x + plat[k].rect.width - 10, plat[k].rect.y, WHITE);
     }
 
     for (k = 12; k < 14; k++) {
-        DrawTexture(top, retangulo[k].x, retangulo[k].y, WHITE);
-        for (i = retangulo[k].y+18; i < retangulo[k].y + retangulo[k].height; i+=18){
-            DrawTexture(meio, retangulo[k].x, i, WHITE);
+        DrawTexture(nivel[8], plat[k].rect.x, plat[k].rect.y, WHITE);
+        for (i = plat[k].rect.y+18; i < plat[k].rect.y + plat[k].rect.height; i+=18){
+            DrawTexture(nivel[4], plat[k].rect.x, i, WHITE);
         }
-        DrawTexture(chao, retangulo[k].x, retangulo[k].y + retangulo[k].height, WHITE);
+        DrawTexture(nivel[1], plat[k].rect.x, plat[k].rect.y + plat[k].rect.height, WHITE);
     }
 
 }
 
-void niveis(int *fase){
+void mostrarTextura1(Texture2D *nivel1, Plataforma *plat, Feature *recursos) {
 
+}
+
+void mostrarTextura2(Texture2D *nivel2, Plataforma *plat, Feature *recursos) {
+
+}
+
+void niveis(int fase, Plataforma *plat, Feature *recursos){
+    //Carregar assets
     Texture2D agua = LoadTexture("Assets/agua.png");
     Texture2D chao = LoadTexture("Assets/chao.png");
     Texture2D direito = LoadTexture("Assets/direito.png");
@@ -54,34 +46,37 @@ void niveis(int *fase){
     Texture2D objeto = LoadTexture("Assets/objeto.png");
     Texture2D parede = LoadTexture("Assets/parede.png");
     Texture2D top = LoadTexture("Assets/top.png");
-
-    SetTargetFPS(60);
-    
-    if(*fase == 1){
+  
+    if(fase == 1){
+        Texture2D nivel1[] = {
+            agua, chao, direito, esquerdo, meio, mid, objeto, parede, top
+        };
         BeginDrawing();//comeca a desenhar fase 1
-
-
+            ClearBackground(RAYWHITE);
+            mostrarTextura1(nivel1, plat, recursos);
         EndDrawing();//final da fase 1
         
     }
-    else if(*fase == 2){
+    else if(fase == 2){
+        Texture2D nivel2[] = {
+            agua, chao, direito, esquerdo, meio, mid, objeto, parede, top
+        };
         BeginDrawing();//comeca fase 2
-
-
+            ClearBackground(RAYWHITE);
+            mostrarTextura2(nivel2, plat, recursos);
         EndDrawing();// termina fase 2
     }
     else {
-        BeginDrawing();//fase inicial
-            
+    // agua[0], chao[1], direito[2], esquerdo[3], meio[4], mid[5], objeto[6], parede[7], top[8]
+        Texture2D nivel[] = {
+            agua, chao, direito, esquerdo, meio, mid, objeto, parede, top
+        };
+        BeginDrawing();//fase inicial 
             ClearBackground(RAYWHITE);
-            DrawTexture(objeto, 550, 550, WHITE);
-            
-            mostrarTextura(esquerdo, direito, agua, chao, meio, mid, objeto, parede, top);
-
-
+            mostrarTextura(nivel, plat, recursos);
         EndDrawing();// final fase inicial||| ao sair daqui tem q ir direto para a fase 1 especificamente
     }
-
+    //Descarregar assets
     UnloadTexture(agua);
     UnloadTexture(chao);
     UnloadTexture(direito);

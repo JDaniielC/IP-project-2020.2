@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "config.h"
+#include <stdio.h>
 
 void movJogador(Player *player, Plataforma *plataforma, int tamPlataforma, float delta, Vector2 inicial)
 {   
@@ -52,6 +53,10 @@ void movJogador(Player *player, Plataforma *plataforma, int tamPlataforma, float
             if (item->mata) {
                 p->posicao = inicial;
             }
+            if (item->trampolim) {
+                p->velocidade = -constVertical * 2;
+                p->pular = false;
+            }
         }
     }
 
@@ -60,5 +65,47 @@ void movJogador(Player *player, Plataforma *plataforma, int tamPlataforma, float
         player->posicao.y += player->velocidade*delta;
         player->velocidade += Gravidade*delta;
         player->pular = false;
+    }
+}
+
+void features(Player *player, Feature *recursos, int tam, float delta, int *fase) {
+    for (int i = 0; i < tam; i++) {
+        Feature *item = recursos + i;
+        Player *p = player;
+
+        if (item->bloqueado) {
+            player->velocidade = 0.0f;
+
+            if (item->react.x < p->posicao.x + p->largura
+                && p->posicao.x < item->react.x) {
+                player->posicao.x -= constHorizontal*delta;  
+                player->posicao.y += deslizar*delta;
+                player->velocidade += Gravidade*delta;
+            }
+            else if (p->posicao.x < item->react.x + item->react.width
+                && item->react.x + item->react.width < p->posicao.x + p->largura) {
+                player->posicao.x += constHorizontal*delta;
+                player->posicao.y += deslizar*delta;
+                player->velocidade += Gravidade*delta;
+            }
+            else if (item->react.y < p->posicao.y + p->altura
+                && p->posicao.y < item->react.y)
+            {
+                p->posicao.y = item->react.y - p->altura;
+                p->pular = true;
+            }
+            else if (p->posicao.y < item->react.y + item->react.height
+                && item->react.y < p->posicao.y) {
+                p->pular = false;
+                p->posicao.y = item->react.y + item->react.height;
+            }
+        } 
+
+        if (CheckCollisionRecs((Rectangle){
+            p->posicao.x, p->posicao.y, p->largura, p->altura
+        }, item->act)) {
+            if (item->bloqueado) item->bloqueado = 0;
+            else if (item->star) fase += 1;
+        }
     }
 }
