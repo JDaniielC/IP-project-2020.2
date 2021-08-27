@@ -101,7 +101,14 @@ void features(Player *player, Feature *recursos, int tam, float delta, int *fase
                 p->pular = false;
                 p->posicao.y = item->react.y + item->react.height;
             }
-        } 
+        }
+
+        if (item->portal && CheckCollisionRecs((Rectangle){
+            p->posicao.x, p->posicao.y, p->largura, p->altura
+        }, item->act)) {
+            p->posicao.x = item->react.x;
+            p->posicao.y = item->react.y;
+        }
 
         if (CheckCollisionRecs((Rectangle){
             p->posicao.x, p->posicao.y, p->largura, p->altura

@@ -20,6 +20,7 @@ typedef struct {
     Rectangle react;
     int bloqueado;
     int star;
+    int portal;
 } Feature;
 
 #define Gravidade 350
