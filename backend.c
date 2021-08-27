@@ -73,7 +73,9 @@ void features(Player *player, Feature *recursos, int tam, float delta, int *fase
         Feature *item = recursos + i;
         Player *p = player;
 
-        if (item->bloqueado) {
+        if (item->bloqueado && CheckCollisionRecs((Rectangle){
+            p->posicao.x, p->posicao.y, p->largura, p->altura
+        }, item->react)) {
             player->velocidade = 0.0f;
 
             if (item->react.x < p->posicao.x + p->largura
@@ -105,7 +107,7 @@ void features(Player *player, Feature *recursos, int tam, float delta, int *fase
             p->posicao.x, p->posicao.y, p->largura, p->altura
         }, item->act)) {
             if (item->bloqueado) item->bloqueado = 0;
-            else if (item->star) fase += 1;
+            else if (item->star) *fase += 1;
         }
     }
 }

@@ -40,12 +40,10 @@ int main(void) {
     int tamPlataformas = sizeof(plataforma)/sizeof(plataforma[0]);
 
     Feature recursos[] = {
-        //{{Retangulo de ação}, {retangulo de Reação}, bloqueia, portal, objetivo}
-        {{171, 455, 774, 217}, {251, 470, 39 , 163}, 0, 0},
-        {{141, 495, 474, 213}, {222, 70, 60 , 70}, 0, 0},
-        {{441, 595, 674, 713}, {822, 70, 90 , 50}, 0, 0},
-        {{83, 195, 374, 20}, {122, 60, 100 , 500}, 0, 0},
-        {{83, 195, 374, 20}, {122, 60, 100 , 500}, 0, 0},
+        //{{Retangulo de ação}, {retangulo de Reação}, bloqueia, objetivo}
+        {{700, 550, 20, 20}, {251, 470, 39 , 163}, 0, 1},
+        {{60, 250, 40, 40}, {280, 520, 20, 80}, 1, 0},
+        {{83, 195, 20, 20}, {122, 60, 100 , 500}, 0, 0},
     };
     int tam = sizeof(recursos)/sizeof(recursos[0]);
     Vector2 pontoInicial;
@@ -75,6 +73,9 @@ int main(void) {
             features(&player, recursos, tam, deltaTime, &fase);
             DrawTexture(texturePlayer, player.posicao.x, player.posicao.y, WHITE);
             niveis(fase, plataforma, recursos);
+            DrawTextureRec(texturePlayer, (Rectangle){700, 550, 20, 20}, (Vector2){700, 550}, WHITE);
+            DrawTextureRec(texturePlayer, (Rectangle){280, 520, 20, 80}, (Vector2){280, 520}, WHITE);
+            DrawTextureRec(texturePlayer, (Rectangle){60, 250, 40, 40}, (Vector2){60, 250}, WHITE);
 
         }
     }
