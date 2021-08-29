@@ -4,7 +4,7 @@
 int main(void) {
     const int telaHorizontal = 800;
     const int TelaVertical = 600;
-    int fase = 1;
+    int fase = 3;
     
     InitWindow(telaHorizontal, TelaVertical, "Joguinho");
 
@@ -70,37 +70,42 @@ int main(void) {
     int tamPlat1 = sizeof(plataforma1)/sizeof(plataforma1[0]);
 
     Plataforma plataforma2[] ={
+        {{-200, 590, 1050, 10}, 1, 0}, 
         {{80, 560, 130, 40},0,0},
         {{200, 520,160, 40},0,0},
         {{200, 444, 160, 40},0,0},
-        {{550, 120, 60, 40},1,0},
-        {{520, 200, 80, 40},0,0},
-        {{320, 120, 120, 40},0,0},
-        {{200, 120, 80, 40},0,0},
-        {{560, 120, 120, 40},0,0},
-        {{440, 40, 80, 40},1,0},
-        {{600, 560, 160, 40},0,0},
-        {{440, 120, 110, 40},0,0},
-        {{720, 320, 40, 240},0,0},
         {{400, 200, 40, 320},0,0},
+        {{520, 200, 80, 40},0,0},
         {{560, 240, 20, 280},0,0},
         {{580, 240, 20, 280},1,0},
         {{640, 160, 20, 360},1,0},
         {{660, 160, 20, 360},0,0},
-        {{80, 160, 40, 160},0,0},
-        {{400, 120, 40, 40},0,0},
+        {{600, 560, 160, 40},0,0},
         {{760, 560, 40, 40},1,0},
+        {{720, 320, 40, 240},0,0},
+        // {{760, 320, 40, 40 },},plataforma falsa.
+        {{600, 120, 80, 40},0,0},
+        {{550, 120, 60, 40},1,0},
+        {{440, 120, 110, 40},0,0},
+        {{400, 120, 40, 40},0,0},
+        {{360, 120, 120, 40},0,0},
+        //{{280, 120, 40, 40 },1,0},
+        //{{160, 120, 40, 40 },},plataforma falsa
+        {{200, 120, 80, 40},0,0},
+        {{440, 40, 80, 40},1,0},
         {{200, 40, 40, 40},1,0},
+        {{80, 160, 40, 160},0,0},
+        //{{40, 280, 40, 40  }   },
         {{0,280, 40, 40},0,0},
-        //{{40, 280, 40, 40, }},
-        //{{280, 120, 40, 40,},1,0},
-        //{{160, 120, 40, 40,},},plataforma falsa
-        // {{760, 320, 40, 40,},},plataforma falsa.
+        {{440,510,120,10},1,0},
+        {{0,-10,800,10},0,0}
     };
     int tamPlat2 = sizeof(plataforma2)/sizeof(plataforma2[0]);
 
     Feature recurso2[] = {
-        {{0, 0, 0, 0}, {0, 0, 0, 0}, 0, 0, 0},
+        {{25, 100, 20, 20}, {760, 320, 40, 40}, 1, 0, 0},
+        {{30, 200, 20, 20}, {760, 500, 40, 40}, 0, 0, 1},
+        {{765, 400, 20, 20}, {760, 320, 40, 40}, 0, 1, 0},
     };
     int tam2 = sizeof(recurso2)/sizeof(recurso2[0]);
 
@@ -109,15 +114,15 @@ int main(void) {
         
         if(fase == 1) {
             pontoInicial = (Vector2){80, 500};
-            movJogador(&player, plataforma, tamPlataformas, deltaTime, pontoInicial);
-            //features(&player, recursos, tam, deltaTime, &fase);
+            movJogador(&player, plataforma1, tamPlat1, deltaTime, pontoInicial);
+            // features(&player, recursos, tam, deltaTime, &fase);
             DrawTexture(texturePlayer, player.posicao.x, player.posicao.y, WHITE);
             niveis(fase, plataforma, recursos);
         
         } else if(fase == 2) {
-            pontoInicial = (Vector2){500, 400};
-            movJogador(&player, plataforma, tamPlataformas, deltaTime, pontoInicial);
-            // features(&player, recurso2, tam2, deltaTime, &fase);
+            pontoInicial = (Vector2){100, 500};
+            movJogador(&player, plataforma2, tamPlat2, deltaTime, pontoInicial);
+            features(&player, recurso2, tam2, deltaTime, &fase);
             DrawTexture(texturePlayer, player.posicao.x, player.posicao.y, WHITE);
             niveis(fase, plataforma2, recursos);
 
