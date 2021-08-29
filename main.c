@@ -4,11 +4,17 @@
 int main(void) {
     const int telaHorizontal = 800;
     const int TelaVertical = 600;
-    int fase = 3;
+    int fase = 2;
     
     InitWindow(telaHorizontal, TelaVertical, "Joguinho");
 
     SetTargetFPS(60);
+
+    InitAudioDevice();
+    Music musica = LoadMusicStream("Assets/musica.mp3");
+    Music musica1 = LoadMusicStream("Assets/musica1.mp3");
+    Music musica2 = LoadMusicStream("Assets/musica2 .mp3");
+
 
     Texture2D texturePlayer = LoadTexture("Assets/character.png");
     Texture2D fundo = LoadTexture("Assets/fundo.png");
@@ -48,25 +54,24 @@ int main(void) {
     Plataforma plataforma1[] = {
         {{0, 560, 400, 40} ,0 ,0},
         {{160, 520, 40, 40} ,0 ,0},
-        {{200, 480, 40, 40} ,0 ,1},
+        {{200, 480, 40, 40} ,1 ,0},
         {{240, 440, 50, 40},0, 0},
         {{280, 400, 120, 40},0 ,0},
         {{360, 440, 40, 120},0 ,0},
         {{360, 240, 40, 160},0 ,0},
         {{110, 240, 130, 40},0 ,0},
         {{80, 240, 40, 200},0 ,0},
-        {{0, 400, 80, 40},0 ,0},
+        {{0, 400, 80, 40},1 ,0},
         {{80, 120, 40, 120},0 ,0},
         {{0, 80, 540, 40},0 ,0},
         {{520, 560, 220, 40},0 ,0},
-        {{720, 560, 80, 40},0 ,0},
+        {{720, 560, 80, 40},0 ,1},
         {{680, 80, 40, 440},0 ,0},
-        {{700, 80, 100, 40},0 ,1},
-        {{600, 0, 40, 400},0,0},
+        {{700, 80, 100, 40},1 ,0},
         {{720, 480, 80, 40},0 ,0},
-        {{0, 0, 1, 600}, 0, 1},
-        {{799 , 0, 1, 600}, 0, 1},
-    };
+        {{0, 0, 1, 600}, 1, 0},
+        {{799 , 0, 1, 600}, 1, 0},
+        };
     int tamPlat1 = sizeof(plataforma1)/sizeof(plataforma1[0]);
 
     Plataforma plataforma2[] ={
@@ -109,10 +114,16 @@ int main(void) {
     };
     int tam2 = sizeof(recurso2)/sizeof(recurso2[0]);
 
+
     while(!WindowShouldClose()) {
         float deltaTime = GetFrameTime();
         
+        
+        
         if(fase == 1) {
+            StopMusicStream(musica);
+            PlayMusicStream(musica1);
+            UpdateMusicStream(musica1);
             pontoInicial = (Vector2){80, 500};
             movJogador(&player, plataforma1, tamPlat1, deltaTime, pontoInicial);
             // features(&player, recursos, tam, deltaTime, &fase);
@@ -120,6 +131,9 @@ int main(void) {
             niveis(fase, plataforma, recursos);
         
         } else if(fase == 2) {
+            StopMusicStream(musica1);
+            PlayMusicStream(musica2);
+            UpdateMusicStream(musica2);
             pontoInicial = (Vector2){100, 500};
             movJogador(&player, plataforma2, tamPlat2, deltaTime, pontoInicial);
             features(&player, recurso2, tam2, deltaTime, &fase);
@@ -127,6 +141,8 @@ int main(void) {
             niveis(fase, plataforma2, recursos);
 
         } else {
+            PlayMusicStream(musica);
+            UpdateMusicStream(musica);
             pontoInicial = (Vector2){20, 540};
             movJogador(&player, plataforma, tamPlataformas, deltaTime, pontoInicial);
             features(&player, recursos, tam, deltaTime, &fase);
@@ -137,6 +153,10 @@ int main(void) {
     }
     UnloadTexture(texturePlayer);
     UnloadTexture(fundo);
+    UnloadMusicStream(musica);
+    UnloadMusicStream(musica1);
+    UnloadMusicStream(musica2);
+    CloseAudioDevice(); 
     CloseWindow();
 
     return 0;
