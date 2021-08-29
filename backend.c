@@ -72,7 +72,7 @@ void features(Player *player, Feature *recursos, int tam, float delta, int *fase
     for (int i = 0; i < tam; i++) {
         Feature *item = recursos + i;
         Player *p = player;
-
+        
         if (item->bloqueado && CheckCollisionRecs((Rectangle){
             p->posicao.x, p->posicao.y, p->largura, p->altura
         }, item->react)) {
@@ -113,7 +113,10 @@ void features(Player *player, Feature *recursos, int tam, float delta, int *fase
         if (CheckCollisionRecs((Rectangle){
             p->posicao.x, p->posicao.y, p->largura, p->altura
         }, item->act)) {
-            if (item->bloqueado) item->bloqueado = 0;
+            if (item->bloqueado) {
+                item->bloqueado = 0;
+                
+            }
             else if (item->star) *fase += 1;
         }
     }

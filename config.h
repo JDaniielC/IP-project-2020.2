@@ -1,6 +1,5 @@
 #ifndef CCONFIG_H
 #define CONFIG_H
-
 typedef struct Player {
     Vector2 posicao;
     float velocidade;
@@ -35,6 +34,10 @@ void mostrarTextura1(Texture2D *nivel1, Plataforma *plat, Feature *recursos);
 void mostrarTextura2(Texture2D *nivel2, Plataforma *plat, Feature *recursos);
 
 void movJogador(Player *player, Plataforma *plataformas, int tamPlataforma, float delta, Vector2 inicial);
+
+Texture2D *carregarTextura();
+ 
+void descarregarTexturas();
 
 void niveis(int fase, Plataforma *plat, Feature *recursos);
 
