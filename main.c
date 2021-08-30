@@ -118,8 +118,6 @@ int main(void) {
     while(!WindowShouldClose()) {
         float deltaTime = GetFrameTime();
         
-        
-        
         if(fase == 1) {
             StopMusicStream(musica);
             PlayMusicStream(musica1);
