@@ -20,6 +20,7 @@ int main(void) {
     Texture2D fundo = LoadTexture("Assets/fundo.png");
     Texture2D final = LoadTexture("Assets/FimDeJogo.png");
     Texture2D sunset = LoadTexture("Assets/sunset.png");
+    Texture2D fundo2 = LoadTexture("Assets/fundo2.png");
     Vector2 pontoInicial;
 
     Player player = { 0 };
@@ -156,6 +157,7 @@ int main(void) {
             pontoInicial = (Vector2){100, 500};
             movJogador(&player, plataforma2, tamPlat2, deltaTime, pontoInicial);
             features(&player, recurso2, tam2, deltaTime, &fase, pontoInicial);
+            DrawTexture(fundo2, fundo2.width/800, fundo2.height/600, LIGHTGRAY);
             DrawTexture(texturePlayer, player.posicao.x, player.posicao.y, WHITE);
             niveis(fase, plataforma2, recursos);
 
@@ -164,7 +166,7 @@ int main(void) {
             PlayMusicStream(musicaFinal);
             UpdateMusicStream(musicaFinal);
             BeginDrawing();
-                DrawTexture(final, final.width/1080, final.height/630, LIGHTGRAY); 
+                DrawTexture(final, final.width/800, final.height/600, LIGHTGRAY); 
                 ClearBackground(RAYWHITE);
             EndDrawing();
         }
@@ -173,6 +175,7 @@ int main(void) {
     UnloadTexture(fundo);
     UnloadTexture(sunset);
     UnloadTexture(final);
+    UnloadTexture(fundo2);
     UnloadMusicStream(musica);
     UnloadMusicStream(musica1);
     UnloadMusicStream(musica2);
