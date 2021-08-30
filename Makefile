@@ -27,9 +27,9 @@
 PROJECT_NAME       ?= Dureza
 RAYLIB_VERSION     ?= 3.8.0
 ## @TODO: Mude aqui para o caminho de onde está o raylib
-RAYLIB_PATH        ?= C:\raylib\raylib
+RAYLIB_PATH        ?= ./include
 
-# Define compiler path on Windows
+# Defina a pasta do compilador aqui (Mingw)\/
 COMPILER_PATH      ?= C:\Program Files\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin
 
 # Define default options

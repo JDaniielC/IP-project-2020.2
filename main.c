@@ -4,7 +4,7 @@
 int main(void) {
     const int telaHorizontal = 800;
     const int TelaVertical = 600;
-    int fase = 0;
+    int fase = 1;
     
     InitWindow(telaHorizontal, TelaVertical, "Dureza");
 
@@ -67,12 +67,13 @@ int main(void) {
         {{0, 400, 80, 40},1 ,0},
         {{0, 80, 540, 40},0 ,0},
         {{520, 560, 220, 40},0 ,0},
-        {{720, 560, 80, 40},0 ,1},
+        {{720, 550, 80, 40},0 ,1},
         {{680, 80, 40, 440},0 ,0},
         {{700, 80, 100, 40},1 ,0},
         {{0, 0, 20, 600}, 0, 0},
         {{780 , 0, 20, 600}, 0, 0},
-        {{80, 120, 40 , 100}, 0, 0}
+        {{80, 120, 40 , 100}, 0, 0}, 
+        {{0, 600, 800, 1}, 1, 0}
     };
     int tamPlat1 = sizeof(plataforma1)/sizeof(plataforma1[0]);
 
