@@ -26,10 +26,10 @@ Ordem para direita, pressionando o botao indo para direita, pule, pressione o bo
 '''
 
 ## Contribuidores
-Lucas Emmanuel G. de Lucena, LEGL
-Marcelo Vinícius B. Santos, MVBS4
-José Daniel S. do Carmo, JDSC2
-João Pedro de A. M. Marinho, JPAMM
-Pedro Rodrigues D. da Silva, PRDS
-Leandro Vasconcelos S. L. de Lima, LVSLL
+- Lucas Emmanuel G. de Lucena, LEGL
+- Marcelo Vinícius B. Santos, MVBS4
+- José Daniel S. do Carmo, JDSC2
+- João Pedro de A. M. Marinho, JPAMM
+- Pedro Rodrigues D. da Silva, PRDS
+- Leandro Vasconcelos S. L. de Lima, LVSLL
 
