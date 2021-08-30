@@ -4,7 +4,7 @@
 int main(void) {
     const int telaHorizontal = 800;
     const int TelaVertical = 600;
-    int fase = 1;
+    int fase = 0;
     
     InitWindow(telaHorizontal, TelaVertical, "Dureza");
 
