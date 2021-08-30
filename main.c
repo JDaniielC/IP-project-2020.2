@@ -4,7 +4,7 @@
 int main(void) {
     const int telaHorizontal = 800;
     const int TelaVertical = 600;
-    int fase = 2;
+    int fase = 1;
     
     InitWindow(telaHorizontal, TelaVertical, "Joguinho");
 
@@ -18,6 +18,7 @@ int main(void) {
 
     Texture2D texturePlayer = LoadTexture("Assets/character.png");
     Texture2D fundo = LoadTexture("Assets/fundo.png");
+    Texture2D sunset = LoadTexture("Assets/sunset.png");
     Vector2 pontoInicial;
 
     Player player = { 0 };
@@ -127,6 +128,7 @@ int main(void) {
             pontoInicial = (Vector2){80, 500};
             movJogador(&player, plataforma1, tamPlat1, deltaTime, pontoInicial);
             // features(&player, recursos, tam, deltaTime, &fase);
+            DrawTexture(sunset, sunset.width/400, sunset.height/200, LIGHTGRAY);
             DrawTexture(texturePlayer, player.posicao.x, player.posicao.y, WHITE);
             niveis(fase, plataforma, recursos);
         
@@ -153,6 +155,7 @@ int main(void) {
     }
     UnloadTexture(texturePlayer);
     UnloadTexture(fundo);
+    UnloadTexture(sunset);
     UnloadMusicStream(musica);
     UnloadMusicStream(musica1);
     UnloadMusicStream(musica2);
