@@ -21,6 +21,8 @@ int main(void) {
     Texture2D final = LoadTexture("Assets/FimDeJogo.png");
     Texture2D sunset = LoadTexture("Assets/sunset.png");
     Texture2D fundo2 = LoadTexture("Assets/fundo2.png");
+    Image icon = LoadImage("Assets/character.png");
+    SetWindowIcon(icon);
     Vector2 pontoInicial;
 
     Player player = { 0 };
@@ -98,7 +100,7 @@ int main(void) {
         {{360, 120, 120, 40},0,0},
         {{400, 120, 40, 40},0,0},
         {{440, 120, 110, 40},0,0},
-        {{560, 120, 60, 20},1,0},
+        {{560, 120, 40, 20},1,0},
         {{600, 120, 80, 40},0,0},
         {{540, 140, 60, 20},1,0},
         {{80,  160, 40, 160},0,0},
@@ -181,6 +183,7 @@ int main(void) {
     UnloadTexture(sunset);
     UnloadTexture(final);
     UnloadTexture(fundo2);
+    UnloadImage(icon);
     UnloadMusicStream(musica);
     UnloadMusicStream(musica1);
     UnloadMusicStream(musica2);
