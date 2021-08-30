@@ -4,7 +4,7 @@
 int main(void) {
     const int telaHorizontal = 800;
     const int TelaVertical = 600;
-    int fase = 1;
+    int fase = 0;
     
     InitWindow(telaHorizontal, TelaVertical, "Joguinho");
 
@@ -14,7 +14,6 @@ int main(void) {
     Music musica = LoadMusicStream("Assets/musica.mp3");
     Music musica1 = LoadMusicStream("Assets/musica1.mp3");
     Music musica2 = LoadMusicStream("Assets/musica2 .mp3");
-
 
     Texture2D texturePlayer = LoadTexture("Assets/character.png");
     Texture2D fundo = LoadTexture("Assets/fundo.png");

@@ -389,7 +389,6 @@ void niveis(int fase, Plataforma *plat, Feature *recursos){
     Texture2D espinhoE = LoadTexture("Assets/espinhoE.png");
     Texture2D espinhoD = LoadTexture("Assets/espinhoD.png");
     Texture2D espinhoB = LoadTexture("Assets/espinhoB.png");
-    Texture2D sunset = LoadTexture("Assets/sunset.png");
     Texture2D porta = LoadTexture("Assets/porta.png");
     Texture2D agua1 = LoadTexture("Assets/agua1.png");
     Texture2D core = LoadTexture("Assets/core.png");
@@ -397,7 +396,7 @@ void niveis(int fase, Plataforma *plat, Feature *recursos){
  
     if(fase == 1){
         Texture2D nivel1[] = {
-              agua, chao, direito, esquerdo, meio, meio, objeto, parede, parede, chao1, chao2, sunset, chaoCeu, agua1, core, porta, azulejo, cogumelo, CBE
+              agua, chao, direito, esquerdo, meio, meio, objeto, parede, parede, chao1, chao2, chao2, chaoCeu, agua1, core, porta, azulejo, cogumelo, CBE
         };
         BeginDrawing();//comeca a desenhar fase 1
             ClearBackground(BLACK);
@@ -447,5 +446,7 @@ void niveis(int fase, Plataforma *plat, Feature *recursos){
     UnloadTexture(nine);     UnloadTexture(cordaEsq); UnloadTexture(cordaMeio);
     UnloadTexture(CBE);      UnloadTexture(CBM);      UnloadTexture(CBD);
     UnloadTexture(contornoE);UnloadTexture(contornoD);UnloadTexture(core);
-    UnloadTexture(porta);UnloadTexture(sunset);UnloadTexture(agua1);UnloadTexture(azulejo);
+    UnloadTexture(porta);    UnloadTexture(agua1);    UnloadTexture(azulejo);
+    UnloadTexture(espinhoB); UnloadTexture(espinhoD); UnloadTexture(espinhoE);
+    
 }
