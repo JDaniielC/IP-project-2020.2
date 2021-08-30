@@ -265,10 +265,8 @@ void mostrarTextura1(Texture2D *nivel1, Plataforma *plat, Feature *recursos) {
 
 void mostrarTextura2(Texture2D *nivel2, Plataforma *plat, Feature *recursos) {
     int i, j;
-    DrawText("Fase 2", 10, 10, 50, PINK);
-
     // agua[0], contornoE[1], contornoD[2], chao2[3], CBE[4], CBM[5], CBD[6]
-    for (i = 0; i < 40; i++) DrawTexture(nivel2[0], i*20, 582, WHITE);
+    for (i = 0; i < 40; i++) DrawTexture(nivel2[0], i*20, 580, WHITE);
     DrawTexture(nivel2[1], 80, 560, WHITE);
     for (i = 100; i < 180; i+= 20) DrawTexture(nivel2[3], i, 560, WHITE);
     DrawTexture(nivel2[2], 180, 560, WHITE);
@@ -277,53 +275,48 @@ void mostrarTextura2(Texture2D *nivel2, Plataforma *plat, Feature *recursos) {
     DrawTexture(nivel2[6], 180, 580, WHITE);
     
     //chaoCeu[7], cordaEsq[8], cordaMeio[9], cordaDir[10], bandeira[11]
-    for (i = 200; i < 360; i+= 20) {
-        for (j = 520; j < 550; j+= 20)
+    for (i = 200; i < 400; i+= 20) {
+        for (j = 520; j < 560; j+= 20)
             DrawTexture(nivel2[7], i, j, WHITE);
     }
-    for (i = 200; i < 360; i+= 20) {
-        for (j = 444; j < 480; j+= 20)
+    for (i = 80; i < 360; i+= 20) {
+        for (j = 440; j < 480; j+= 20)
             DrawTexture(nivel2[7], i, j, WHITE);
     }
     
     for (i = 200; i < 580; i+= 20) DrawTexture(nivel2[9], i, 560, WHITE);
-    DrawTexture(nivel2[8], 201, 560, WHITE);
+    DrawTexture(nivel2[8], 200, 560, WHITE);
     DrawTexture(nivel2[10], 580, 560, WHITE);
-    DrawTexture(nivel2[11], 80, 542, WHITE);
+    DrawTexture(nivel2[11], 80, 540, WHITE);
 
-    DrawRectangle(400, 200, 40, 320, WHITE);
-    DrawRectangle(520, 200, 80, 40, WHITE);
-    DrawRectangle(560, 240, 20, 280, WHITE);
-    DrawRectangle(660, 160, 20, 360, WHITE);
-
+    //caixote[12]
     for (i = 600; i < 760; i+= 20) {
         for (j = 560; j < 600; j+= 20) 
             DrawTexture(nivel2[12], i, j, WHITE);
     } 
 
-    for (i = 720; i < 750; i+= 20) {
-        for (j = 320; j < 550; j+= 20) 
+    for (i = 720; i < 760; i+= 20) {
+        for (j = 320; j < 560; j+= 20) 
             DrawTexture(nivel2[12], i, j, WHITE);
     } 
 
-    DrawCircle(780, 500, 14, BLUE);         //portal troca de fase
-
-    DrawRectangle(760, 320, 40, 40, GRAY);
-
+    if (recursos[0].bloqueado) {
+        for (i = 760; i < 801; i+= 20) 
+            for (j = 320; j < 360; j+=20)
+                DrawTexture(nivel2[7], i, j, WHITE);
+    }
     // esquerdo[13], meio[14], direito[15], espinhoE[16], espinhoD[17], espinhos[18], espinhoB[19]
     DrawTexture(nivel2[13], 160, 120, WHITE);
-    for (i = 160; i < 660; i+= 20) DrawTexture(nivel2[14], i, 120, WHITE);
+    for (i = 180; i < 660; i+= 20) DrawTexture(nivel2[14], i, 120, WHITE);
     DrawTexture(nivel2[15], 660, 120, WHITE);
     DrawTexture(nivel2[4], 160, 140, WHITE);
-    for (i = 160; i < 670; i+= 20) DrawTexture(nivel2[5], i, 140, WHITE);
-    DrawTexture(nivel2[6], 660, 140, WHITE);
+    for (i = 180; i < 660; i+= 20) DrawTexture(nivel2[5], i, 140, WHITE);
     
-    for (i = 550; i < 610; i += 20) {
+    for (i = 560; i < 600; i += 20) {
         DrawTexture(nivel2[18], i, 100, WHITE);
-        DrawTexture(nivel2[19], i, 158, WHITE);
     }
     for (i = 580; i < 600; i+=20) {
-        for (j = 240; j < 520; j += 20) {
+        for (j = 240; j < 500; j += 20) {
             DrawTexture(nivel2[16], i, j, WHITE);
         }
     }
@@ -334,16 +327,125 @@ void mostrarTextura2(Texture2D *nivel2, Plataforma *plat, Feature *recursos) {
         }
     }
 
-    DrawRectangle(440, 40, 80, 40, RED);
-    DrawRectangle(200, 40, 40, 40, RED);
-    DrawRectangle(80, 160, 40, 160, WHITE);
-    DrawRectangle(40, 280, 40, 40, YELLOW);//objetivo
-    DrawRectangle(0,280, 40, 40, WHITE);
-    DrawRectangle(20,60, 20, 20, YELLOW);
+    //parede[21], cogumelbase[22], chaocogumeloesquerda[23], chaocogumeloireita[24], cogumelovermelho[25], chaoCogumelomeio[47]
+    DrawTexture(nivel2[26], 400, 200, WHITE);
+    for (i = 400 ; i < 420 ; i += 20)
+        for (j = 220 ; j < 480 ; j+=20)
+            DrawTexture(nivel2[21], i, j, WHITE);
 
-    DrawTexture(nivel2[20], 10, 90, WHITE);
+    DrawTexture(nivel2[22],400, 480, WHITE);
+    DrawTexture(nivel2[23],400, 500, WHITE);
+    DrawTexture(nivel2[47],420, 500, WHITE);
+    DrawTexture(nivel2[24],440, 500, WHITE);
+    DrawTexture(nivel2[25],420, 480, WHITE);
+    //coguelomeio[26] cogumeloesquerda[27], cogumelodireita[28], base[29], tronco[30], troquinho[31]
+    //arvore[32], base[33] bifu[34], eight[35], seven[36], nine[37], five[38]
+    DrawTexture(nivel2[27],380, 200, WHITE);
+    DrawTexture(nivel2[26],400, 200, WHITE);
+    DrawTexture(nivel2[28],420, 200, WHITE);
 
-    DrawRectangle(440,510,120,10, RED);
+    for (i = 540 ; i < 560 ; i += 20)
+        for (j = 240 ; j < 480 ; j+=20)
+            if (j%80 == 0)
+                DrawTexture(nivel2[30], i, j, WHITE);
+            else if (j%40 == 0)
+                DrawTexture(nivel2[31], i, j, WHITE);
+            else
+                DrawTexture(nivel2[32], i, j, WHITE);
+
+    for (i = 560 ; i < 580 ; i += 20)
+        for (j = 240 ; j < 500 ; j+=20)
+           DrawTexture(nivel2[12], i, j, WHITE);
+    
+    DrawTexture(nivel2[33], 540, 480, WHITE);
+
+    DrawTexture(nivel2[2], 560, 500, WHITE);
+    DrawTexture(nivel2[3], 540, 500, WHITE);
+    DrawTexture(nivel2[5], 540, 520, WHITE);
+    DrawTexture(nivel2[3], 520, 500, WHITE);
+    DrawTexture(nivel2[5], 520, 520, WHITE);
+    DrawTexture(nivel2[1], 500, 500, WHITE);
+    DrawTexture(nivel2[6], 560, 520, WHITE);
+    DrawTexture(nivel2[4], 500, 520, WHITE);
+
+    DrawTexture(nivel2[36], 500, 220, WHITE);
+    DrawTexture(nivel2[35], 520, 220, WHITE);
+    DrawTexture(nivel2[35], 560, 220, WHITE);
+    DrawTexture(nivel2[34], 540, 220, WHITE);
+    DrawTexture(nivel2[37], 580, 220, WHITE);
+
+    //one[39], two[40], three[41], four[42], six[43], meiota[44], baixeta[45], direitota[46],chaoCogumelomeio[47], olaf[48]
+    for (i = 520 ; i < 580 ; i += 20)
+        for (j = 180 ; j < 220 ; j+=20)
+            DrawTexture(nivel2[38], i, j, WHITE);
+
+    DrawTexture(nivel2[39], 500, 160, WHITE);
+    DrawTexture(nivel2[41], 580, 160, WHITE);
+
+    for (i = 520, j = 160 ; i < 580 ; i += 20)
+        DrawTexture(nivel2[40], i, j, WHITE);
+    
+    for (i = 500 ; i < 520 ; i += 20)
+        for (j = 180 ; j < 220 ; j+=20)
+            DrawTexture(nivel2[42], i, j, WHITE);
+
+    for (i = 580 ; i < 600 ; i += 20)
+        for (j = 180 ; j < 220 ; j+=20)
+            DrawTexture(nivel2[43], i, j, WHITE);
+    
+    for (i = 660 ; i < 680 ; i += 20)
+        for (j = 160 ; j < 500 ; j+=20)
+            DrawTexture(nivel2[44], i, j, WHITE);
+    
+    DrawTexture(nivel2[45], 660, 500, WHITE);
+    DrawTexture(nivel2[46], 660, 140, WHITE);
+
+    DrawTexture(nivel2[18], 210, 30, WHITE);
+    DrawTexture(nivel2[19], 210, 70, WHITE);
+    DrawTexture(nivel2[17], 190, 50, WHITE);
+    DrawTexture(nivel2[16], 230, 50, WHITE);
+    DrawTexture(nivel2[12], 210, 50, WHITE);
+
+    for (i = 450 ; i < 510 ; i += 20) DrawTexture(nivel2[12], i, 50, WHITE);
+    for (i = 450 ; i < 510 ; i += 20) DrawTexture(nivel2[18], i, 30, WHITE);
+    for (i = 450 ; i < 510 ; i += 20) DrawTexture(nivel2[19], i, 70, WHITE);
+    DrawTexture(nivel2[16], 510, 50, WHITE);
+    DrawTexture(nivel2[17], 430, 50, WHITE);
+
+    //olaf[48], nevinha[49], esquerdota[50]
+    DrawTexture(nivel2[48], 220, 102, WHITE);
+    DrawTexture(nivel2[48], 500, 102, WHITE);
+    DrawTexture(nivel2[49], 180, 100, WHITE);
+    DrawTexture(nivel2[49], 640, 100, WHITE);
+    DrawTexture(nivel2[49], 360, 100, WHITE);
+
+    DrawTexture(nivel2[13], 80, 160, WHITE);
+    DrawTexture(nivel2[15], 100, 160, WHITE);
+
+    for (j = 180 ; j < 300 ; j += 20) DrawTexture(nivel2[46], 100, j, WHITE);
+    for (j = 180 ; j < 300 ; j += 20) DrawTexture(nivel2[50], 80, j, WHITE);
+    DrawTexture(nivel2[4], 80, 300, WHITE);
+    DrawTexture(nivel2[6], 100, 300, WHITE);
+    DrawTexture(nivel2[48], 90, 142, WHITE);
+
+    DrawTexture(nivel2[1], 0, 280, WHITE);
+    DrawTexture(nivel2[2], 20, 280, WHITE);
+    DrawTexture(nivel2[4], 0, 300, WHITE);
+    DrawTexture(nivel2[6], 20, 300, WHITE);
+
+    if (recursos[0].bloqueado) DrawTexture(nivel2[20], 10, 90, WHITE);
+    if (!recursos[0].bloqueado) {
+        DrawTexture(nivel2[52], 5, 245, WHITE);
+        DrawTexture(nivel2[53], 760, 400, WHITE);
+    }
+
+    if (recursos[0].bloqueado) {
+        for (i = 0; i < 80; i+= 20) 
+            for (j = 200; j < 201; j+=20)
+                DrawTexture(nivel2[7], i, j, WHITE);
+    }
+
+    DrawTexture(nivel2[51], 770, 480, WHITE);
 }
 
 void niveis(int fase, Plataforma *plat, Feature *recursos){
@@ -400,6 +502,25 @@ void niveis(int fase, Plataforma *plat, Feature *recursos){
     Texture2D agua1 = LoadTexture("Assets/agua1.png");
     Texture2D core = LoadTexture("Assets/core.png");
     Texture2D azulejo = LoadTexture("Assets/azulejo.png");
+    Texture2D cogumelodireito = LoadTexture("Assets/cogumelodireito.png");
+    Texture2D cogumeloesquerda = LoadTexture("Assets/cogumeloesquerda.png");
+    Texture2D cogumelodireita = LoadTexture("Assets/cogumelodireita.png");
+    Texture2D cogumelobase = LoadTexture("Assets/cogumelobase.png");
+    Texture2D cogumelovermelho = LoadTexture("Assets/cogumelovermelho.png");
+    Texture2D chaoCogumelocompleto = LoadTexture("Assets/chaoCogumelocompleto.png");
+    Texture2D chaoCogumeloesquerda = LoadTexture("Assets/chaoCogumeloesquerda.png");
+    Texture2D chaoCogumelodireita = LoadTexture("Assets/chaoCogumelodireita.png");
+    Texture2D chaoCogumelomeio = LoadTexture("Assets/chaoCogumelomeio.png");
+    Texture2D cogumelomeio = LoadTexture("Assets/cogumelomeio.png");
+    Texture2D meiota = LoadTexture("Assets/meiota.png");
+    Texture2D baixeta = LoadTexture("Assets/baixeta.png");
+    Texture2D direitota = LoadTexture("Assets/direitota.png");
+    Texture2D olaf = LoadTexture("Assets/olaf.png");
+    Texture2D nevinha = LoadTexture("Assets/nevinha.png");
+    Texture2D esquerdota = LoadTexture("Assets/esquerdota.png");
+    Texture2D chaoCompleto1 = LoadTexture("Assets/tile_0000.png");
+    Texture2D in = LoadTexture("Assets/sprite_22.png");
+    Texture2D out = LoadTexture("Assets/sprite_40.png");
  
     if(fase == 1){
         Texture2D nivel1[] = {
@@ -412,8 +533,18 @@ void niveis(int fase, Plataforma *plat, Feature *recursos){
         
     }
     else if(fase == 2){
-        Texture2D nivel2[] = {
-            agua, contornoE, contornoD, chao2, CBE, CBM, CBD, chaoCeu, cordaEsq, cordaMeio, cordaDir, start, chao, esquerdo, meio, direito, espinhoE, espinhoD, espinhos, espinhoB, portal
+         Texture2D nivel2[] = {
+            agua, contornoE, contornoD, chao2, CBE,
+            CBM, CBD, chaoCeu, cordaEsq, cordaMeio, 
+            cordaDir, start, chao, esquerdo, meio, 
+            direito, espinhoE, espinhoD, espinhos, espinhoB,
+            chave, parede, cogumelobase, chaoCogumeloesquerda, chaoCogumelodireita,
+            cogumelovermelho, cogumelomeio, cogumeloesquerda, cogumelodireita, base,
+            tronco, tronquino, arvore, base, bifu, 
+            eight, seven, nine, five, one,
+            two, three, four, six, meiota,
+            baixeta, direitota, chaoCogumelomeio, olaf, nevinha,
+            esquerdota, portal, in, out
         };
         BeginDrawing();//comeca fase 2
             ClearBackground(DARKGRAY);
@@ -448,4 +579,14 @@ void niveis(int fase, Plataforma *plat, Feature *recursos){
     UnloadTexture(contornoE);UnloadTexture(contornoD);UnloadTexture(core);
     UnloadTexture(porta);    UnloadTexture(agua1);    UnloadTexture(azulejo);
     UnloadTexture(espinhoB); UnloadTexture(espinhoD); UnloadTexture(espinhoE);
+    UnloadTexture(meiota);   UnloadTexture(baixeta);  UnloadTexture(direitota);
+    UnloadTexture(olaf);     UnloadTexture(nevinha);  UnloadTexture(cogumelomeio);
+    
+    UnloadTexture(esquerdota);          UnloadTexture(cogumelobase);              
+    UnloadTexture(cogumelovermelho);    UnloadTexture(chaoCogumelocompleto);  
+    UnloadTexture(chaoCogumelodireita); UnloadTexture(chaoCogumeloesquerda);    
+    UnloadTexture(chaoCogumelomeio);    UnloadTexture(chaoCompleto1); 
+    UnloadTexture(cogumelodireito);     UnloadTexture(cogumeloesquerda);
+    UnloadTexture(cogumelodireita);     UnloadTexture(chave);
+    UnloadTexture(cogumelo);      UnloadTexture(in);      UnloadTexture(out);
 }
