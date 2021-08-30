@@ -41,6 +41,6 @@ void descarregarTexturas();
 
 void niveis(int fase, Plataforma *plat, Feature *recursos);
 
-void features(Player *player, Feature *recursos, int tam, float delta, int *fase);
+void features(Player *player, Feature *recursos, int tam, float delta, int *fase, Vector2 posicao);
 
 #endif

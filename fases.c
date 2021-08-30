@@ -38,12 +38,12 @@ void mostrarTextura(Texture2D *nivel, Plataforma *plat, Feature *recursos) {
     }
 
     for(i=600; i<640; i+=20){
-        for(j=400; j<580; j+=20){
-            if(j!=400) DrawTexture(nivel[11], i, j, WHITE);
+        for(j=340; j<580; j+=20){
+            if(j!=340) DrawTexture(nivel[11], i, j, WHITE);
             else DrawTexture(nivel[10], i, j, WHITE);
         }
     }
-
+    DrawText("Pule pra cá", 380, 380, 20, DARKBLUE);
     for(i= 400; i<460; i+=20){
         for(j=400; j<420; j+=20){
             if(i==400) DrawTexture(nivel[13], i, j, WHITE);
@@ -91,7 +91,7 @@ void mostrarTextura(Texture2D *nivel, Plataforma *plat, Feature *recursos) {
     if (recursos[1].bloqueado) {
         DrawTexture(nivel[19], 40, 160, WHITE);
         for(i=600; i<640; i+=20){
-            for(j=0; j<400; j+=20){
+            for(j=0; j<340; j+=20){
                 DrawTexture(nivel[17], i, j, WHITE);
             }
         }
@@ -102,9 +102,7 @@ void mostrarTextura(Texture2D *nivel, Plataforma *plat, Feature *recursos) {
 
 void mostrarTextura1(Texture2D *nivel1, Plataforma *plat, Feature *recursos) {
     int i, j;
-
-     
-
+    
     for(i=0; i<400; i+=20){
         for(j=560; j<600; j+=20){
             if(j==560 && i!=360 && i!=380)
@@ -189,7 +187,7 @@ void mostrarTextura1(Texture2D *nivel1, Plataforma *plat, Feature *recursos) {
     for(i=80; i<120; i+=20){
         for(j=120; j<240; j+=20){
             if(j==220){
-                DrawTexture(nivel1[15], i, j, WHITE);
+                if (recursos[0].bloqueado) DrawTexture(nivel1[15], i, j, WHITE);
             }
             else
                 DrawTexture(nivel1[12], i, j, WHITE);
@@ -235,7 +233,8 @@ void mostrarTextura1(Texture2D *nivel1, Plataforma *plat, Feature *recursos) {
     
     for(i=720; i<800; i+=20){
         for(j=480; j< 520; j+=20){
-            DrawTexture(nivel1[12], i, j, WHITE);
+            if (recursos[2].bloqueado)
+                DrawTexture(nivel1[12], i, j, WHITE);
         }
     }
     
@@ -250,6 +249,18 @@ void mostrarTextura1(Texture2D *nivel1, Plataforma *plat, Feature *recursos) {
             DrawTexture(nivel1[12], i, j, WHITE);
         }
     }
+    if (recursos[0].bloqueado) DrawTexture(nivel1[19], 30, 40, WHITE); 
+    if (recursos[1].bloqueado) DrawTexture(nivel1[19], 40, 350, WHITE);
+    if (recursos[2].bloqueado) DrawTexture(nivel1[19], 280, 530, WHITE);
+
+    for (i = 360; i < 381; i+=20) {
+        for (j = 440; j < 560; j+=20) 
+            if (recursos[1].bloqueado) DrawTexture(nivel1[12], i, j, WHITE);
+    }
+
+    DrawTexture(nivel1[6], 751, 152, WHITE);
+    DrawTexture(nivel1[6], 731, 152, WHITE);
+
 }
 
 void mostrarTextura2(Texture2D *nivel2, Plataforma *plat, Feature *recursos) {
@@ -335,10 +346,6 @@ void mostrarTextura2(Texture2D *nivel2, Plataforma *plat, Feature *recursos) {
     DrawRectangle(440,510,120,10, RED);
 }
 
-void final() {
-    DrawText("Parabéns abençoado", 30, GetScreenHeight()/2, 70, PINK);
-}
-
 void niveis(int fase, Plataforma *plat, Feature *recursos){
     //Carregar assets
     Texture2D chao1 = LoadTexture("Assets/chao1.png");
@@ -396,7 +403,7 @@ void niveis(int fase, Plataforma *plat, Feature *recursos){
  
     if(fase == 1){
         Texture2D nivel1[] = {
-              agua, chao, direito, esquerdo, meio, meio, objeto, parede, parede, chao1, chao2, chao2, chaoCeu, agua1, core, porta, azulejo, cogumelo, CBE
+              agua, chao, direito, esquerdo, meio, meio, objeto, parede, parede, chao1, chao2, chao2, chaoCeu, agua1, core, porta, azulejo, cogumelo, CBE, chave
         };
         BeginDrawing();//comeca a desenhar fase 1
             ClearBackground(BLACK);
@@ -413,14 +420,7 @@ void niveis(int fase, Plataforma *plat, Feature *recursos){
             mostrarTextura2(nivel2, plat, recursos);
         EndDrawing();// termina fase 2
     }
-    else if (fase == 3) {
-        BeginDrawing();
-            ClearBackground(RAYWHITE);
-            final();
-        EndDrawing();
-    }
     else {
-        
         Texture2D nivel[] = {
             agua, chao, direito, esquerdo, meio, meio, objeto, parede, parede, parede,chao2, chao1, espinhos, nuvem1, nuvem2, nuvem3, chaoCeu, arvore, portal, chave, start, cacto, right, cogumelo
         };
@@ -448,5 +448,4 @@ void niveis(int fase, Plataforma *plat, Feature *recursos){
     UnloadTexture(contornoE);UnloadTexture(contornoD);UnloadTexture(core);
     UnloadTexture(porta);    UnloadTexture(agua1);    UnloadTexture(azulejo);
     UnloadTexture(espinhoB); UnloadTexture(espinhoD); UnloadTexture(espinhoE);
-    
 }

@@ -24,7 +24,7 @@
 .PHONY: all clean
 
 # Define required raylib variables
-PROJECT_NAME       ?= BolasDoDragao
+PROJECT_NAME       ?= Dureza
 RAYLIB_VERSION     ?= 3.8.0
 ## @TODO: Mude aqui para o caminho de onde está o raylib
 RAYLIB_PATH        ?= C:\raylib\raylib
