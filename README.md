@@ -1,7 +1,7 @@
 # BLOCOS EM DESORDEM
 
 <p align="center">
-<image src="/Assets/Iniciodojogo.png">
+<image src="/Assets/Iniciodojogo2.png">
 </p>
 
 > Um jogo simples baseado em plataformas 
