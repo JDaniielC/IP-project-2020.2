@@ -6,7 +6,7 @@ int main(void) {
     const int TelaVertical = 600;
     int fase = 0;
     
-    InitWindow(telaHorizontal, TelaVertical, "Dureza");
+    InitWindow(telaHorizontal, TelaVertical, "Blocos em desordem");
 
     SetTargetFPS(60);
 
