@@ -54,7 +54,7 @@ void movJogador(Player *player, Plataforma *plataforma, int tamPlataforma, float
                 p->posicao = inicial;
             }
             if (item->trampolim) {
-                p->velocidade = -constVertical * 2;
+                p->velocidade = -constVertical * 3;
                 p->pular = false;
             }
         }
@@ -68,7 +68,7 @@ void movJogador(Player *player, Plataforma *plataforma, int tamPlataforma, float
     }
 }
 
-void features(Player *player, Feature *recursos, int tam, float delta, int *fase) {
+void features(Player *player, Feature *recursos, int tam, float delta, int *fase, Vector2 posicao) {
     for (int i = 0; i < tam; i++) {
         Feature *item = recursos + i;
         Player *p = player;
@@ -115,9 +115,11 @@ void features(Player *player, Feature *recursos, int tam, float delta, int *fase
         }, item->act)) {
             if (item->bloqueado) {
                 item->bloqueado = 0;
-                
             }
-            else if (item->star) *fase += 1;
+            else if (item->star) {
+                *fase += 1;
+                p->posicao = posicao;
+            }
         }
     }
 }

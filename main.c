@@ -6,7 +6,7 @@ int main(void) {
     const int TelaVertical = 600;
     int fase = 0;
     
-    InitWindow(telaHorizontal, TelaVertical, "Joguinho");
+    InitWindow(telaHorizontal, TelaVertical, "Dureza");
 
     SetTargetFPS(60);
 
@@ -14,9 +14,11 @@ int main(void) {
     Music musica = LoadMusicStream("Assets/musica.mp3");
     Music musica1 = LoadMusicStream("Assets/musica1.mp3");
     Music musica2 = LoadMusicStream("Assets/musica2 .mp3");
+    Music musicaFinal = LoadMusicStream("Assets/Happyadventure.mp3");
 
     Texture2D texturePlayer = LoadTexture("Assets/character.png");
     Texture2D fundo = LoadTexture("Assets/fundo.png");
+    Texture2D final = LoadTexture("Assets/FimDeJogo.png");
     Texture2D sunset = LoadTexture("Assets/sunset.png");
     Vector2 pontoInicial;
 
@@ -41,6 +43,7 @@ int main(void) {
         {{0, 200, 120, 40}, 0, 0},
         {{240, 590 ,600 ,10}, 1, 0},
         {{-300, 600, 300, 30}, 1, 0},
+        {{600, 340, 40, 400}, 0, 0}
     };
     int tamPlataformas = sizeof(plataforma)/sizeof(plataforma[0]);
 
@@ -57,23 +60,31 @@ int main(void) {
         {{200, 480, 40, 40} ,1 ,0},
         {{240, 440, 50, 40},0, 0},
         {{280, 400, 120, 40},0 ,0},
-        {{360, 440, 40, 120},0 ,0},
         {{360, 240, 40, 160},0 ,0},
         {{110, 240, 130, 40},0 ,0},
         {{80, 240, 40, 200},0 ,0},
         {{0, 400, 80, 40},1 ,0},
-        {{80, 120, 40, 120},0 ,0},
         {{0, 80, 540, 40},0 ,0},
         {{520, 560, 220, 40},0 ,0},
         {{720, 560, 80, 40},0 ,1},
         {{680, 80, 40, 440},0 ,0},
         {{700, 80, 100, 40},1 ,0},
-        {{720, 480, 80, 40},0 ,0},
-        {{0, 0, 1, 600}, 1, 0},
-        {{799 , 0, 1, 600}, 1, 0},
-        };
+        {{0, 0, 20, 600}, 0, 0},
+        {{780 , 0, 20, 600}, 0, 0},
+        {{80, 120, 40 , 100}, 0, 0}
+    };
     int tamPlat1 = sizeof(plataforma1)/sizeof(plataforma1[0]);
 
+    Feature recurso1[] = {
+        //{{Retangulo de ação}, {retangulo de Reação}, bloqueia, objetivo, portal}
+        {{30, 40, 20, 20}, {80, 120, 40 , 120}, 1, 0, 0},
+        {{40, 350, 20, 20}, {360, 440, 40, 120}, 1, 0, 0},
+        {{280, 530, 20, 20}, {720, 480, 80, 40}, 1, 0, 0},
+        {{751, 152, 20, 20}, {720, 480, 80, 40}, 0, 1, 0},
+    };
+
+    int tam1 = sizeof(recurso1)/sizeof(recurso1[0]);
+    
     Plataforma plataforma2[] ={
         {{-200, 590, 1050, 10}, 1, 0}, 
         {{80, 560, 130, 40},0,0},
@@ -114,20 +125,29 @@ int main(void) {
     };
     int tam2 = sizeof(recurso2)/sizeof(recurso2[0]);
 
-
     while(!WindowShouldClose()) {
         float deltaTime = GetFrameTime();
         
-        if(fase == 1) {
+        if (fase == 0) {
+            PlayMusicStream(musica);
+            UpdateMusicStream(musica);
+            pontoInicial = (Vector2){20, 540};
+            movJogador(&player, plataforma, tamPlataformas, deltaTime, pontoInicial);
+            features(&player, recursos, tam, deltaTime, &fase, pontoInicial);
+            DrawTexture(fundo, fundo.width/800, fundo.height/500, LIGHTGRAY);
+            DrawTexture(texturePlayer, player.posicao.x, player.posicao.y, WHITE);
+            niveis(fase, plataforma, recursos);
+
+        } else if(fase == 1) {
             StopMusicStream(musica);
             PlayMusicStream(musica1);
             UpdateMusicStream(musica1);
             pontoInicial = (Vector2){80, 500};
             movJogador(&player, plataforma1, tamPlat1, deltaTime, pontoInicial);
-            // features(&player, recursos, tam, deltaTime, &fase);
+            features(&player, recurso1, tam1, deltaTime, &fase, pontoInicial);
             DrawTexture(sunset, sunset.width/400, sunset.height/200, LIGHTGRAY);
             DrawTexture(texturePlayer, player.posicao.x, player.posicao.y, WHITE);
-            niveis(fase, plataforma, recursos);
+            niveis(fase, plataforma, recurso1);
         
         } else if(fase == 2) {
             StopMusicStream(musica1);
@@ -135,27 +155,28 @@ int main(void) {
             UpdateMusicStream(musica2);
             pontoInicial = (Vector2){100, 500};
             movJogador(&player, plataforma2, tamPlat2, deltaTime, pontoInicial);
-            features(&player, recurso2, tam2, deltaTime, &fase);
+            features(&player, recurso2, tam2, deltaTime, &fase, pontoInicial);
             DrawTexture(texturePlayer, player.posicao.x, player.posicao.y, WHITE);
             niveis(fase, plataforma2, recursos);
 
         } else {
-            PlayMusicStream(musica);
-            UpdateMusicStream(musica);
-            pontoInicial = (Vector2){20, 540};
-            movJogador(&player, plataforma, tamPlataformas, deltaTime, pontoInicial);
-            features(&player, recursos, tam, deltaTime, &fase);
-            DrawTexture(fundo, fundo.width/800, fundo.height/500, LIGHTGRAY);
-            DrawTexture(texturePlayer, player.posicao.x, player.posicao.y, WHITE);
-            niveis(fase, plataforma, recursos);
+            StopMusicStream(musica1);
+            PlayMusicStream(musicaFinal);
+            UpdateMusicStream(musicaFinal);
+            BeginDrawing();
+                DrawTexture(final, final.width/1080, final.height/630, LIGHTGRAY); 
+                ClearBackground(RAYWHITE);
+            EndDrawing();
         }
     }
     UnloadTexture(texturePlayer);
     UnloadTexture(fundo);
     UnloadTexture(sunset);
+    UnloadTexture(final);
     UnloadMusicStream(musica);
     UnloadMusicStream(musica1);
     UnloadMusicStream(musica2);
+    UnloadMusicStream(musicaFinal);
     CloseAudioDevice(); 
     CloseWindow();
 
