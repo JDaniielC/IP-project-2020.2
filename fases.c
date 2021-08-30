@@ -103,7 +103,7 @@ void mostrarTextura(Texture2D *nivel, Plataforma *plat, Feature *recursos) {
 void mostrarTextura1(Texture2D *nivel1, Plataforma *plat, Feature *recursos) {
     int i, j;
 
-    DrawTexture(nivel1[11], nivel1[11].width/400, nivel1[11].height/200, LIGHTGRAY); 
+     
 
     for(i=0; i<400; i+=20){
         for(j=560; j<600; j+=20){
@@ -192,7 +192,7 @@ void mostrarTextura1(Texture2D *nivel1, Plataforma *plat, Feature *recursos) {
                 DrawTexture(nivel1[15], i, j, WHITE);
             }
             else
-                DrawTexture(nivel1[16], i, j, WHITE);
+                DrawTexture(nivel1[12], i, j, WHITE);
         }
     }
     
@@ -214,9 +214,9 @@ void mostrarTextura1(Texture2D *nivel1, Plataforma *plat, Feature *recursos) {
     for(i=720; i<800; i+=18){
         for(j=560; j< 600; j+=18){
             if(j==560)
-                DrawTexture(nivel1[0], i, j, WHITE);
+                DrawTexture(nivel1[10], i, j, WHITE);
             else
-                DrawTexture(nivel1[13], i, j, WHITE);
+                DrawTexture(nivel1[9], i, j, WHITE);
         }
     }
     
@@ -389,10 +389,15 @@ void niveis(int fase, Plataforma *plat, Feature *recursos){
     Texture2D espinhoE = LoadTexture("Assets/espinhoE.png");
     Texture2D espinhoD = LoadTexture("Assets/espinhoD.png");
     Texture2D espinhoB = LoadTexture("Assets/espinhoB.png");
+    Texture2D sunset = LoadTexture("Assets/sunset.png");
+    Texture2D porta = LoadTexture("Assets/porta.png");
+    Texture2D agua1 = LoadTexture("Assets/agua1.png");
+    Texture2D core = LoadTexture("Assets/core.png");
+    Texture2D azulejo = LoadTexture("Assets/azulejo.png");
  
     if(fase == 1){
         Texture2D nivel1[] = {
-             cogumelo
+              agua, chao, direito, esquerdo, meio, meio, objeto, parede, parede, chao1, chao2, sunset, chaoCeu, agua1, core, porta, azulejo, cogumelo, CBE
         };
         BeginDrawing();//comeca a desenhar fase 1
             ClearBackground(BLACK);
@@ -441,5 +446,6 @@ void niveis(int fase, Plataforma *plat, Feature *recursos){
     UnloadTexture(six);      UnloadTexture(seven);    UnloadTexture(eight);
     UnloadTexture(nine);     UnloadTexture(cordaEsq); UnloadTexture(cordaMeio);
     UnloadTexture(CBE);      UnloadTexture(CBM);      UnloadTexture(CBD);
-    UnloadTexture(contornoE);UnloadTexture(contornoD);
+    UnloadTexture(contornoE);UnloadTexture(contornoD);UnloadTexture(core);
+    UnloadTexture(porta);UnloadTexture(sunset);UnloadTexture(agua1);UnloadTexture(azulejo);
 }
